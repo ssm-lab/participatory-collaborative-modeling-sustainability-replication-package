@@ -21,19 +21,27 @@ def papersPerYear():
     years = df['Publication year'].value_counts().sort_index().to_frame().reset_index()
     years.columns = ['year', 'papers']
 
-    print(years)
+    #print(years)
 
     bins = [2007, 2009, 2014, 2019, 2024]
     labels = ['-2009', '2010-2014', '2015-2019', '2020-2024']
 
     years['yearbins'] = pd.cut(years['year'], bins, labels=labels)
 
-    print(years)
+    #print(years)
 
-    print(years.groupby('yearbins').sum()['papers'])
+    #print(years.groupby('yearbins').sum()['papers'])
 
     fig = plt.figure(figsize = (10, 5))
-    ax = years.groupby('yearbins').sum()['papers'].plot.bar(rot=0)
+    
+    ax = years.groupby('yearbins').sum()['papers'].plot(kind='bar', rot=0, color='#43b82c')
+    
+    ax.set_ylabel('Papers', fontsize=15)
+    ax.set_xlabel('Years', fontsize=15)
+    ax.bar_label(ax.containers[0], fontsize=12)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    
     plt.savefig(f'{outputFolder}/papers-per-year.pdf', format='pdf', bbox_inches='tight')
     plt.show()
 
@@ -137,4 +145,4 @@ def wordcloud():
         plt.savefig(f'{outputFolder}/wordcloud-abstracts.pdf', format='pdf', bbox_inches='tight')
         plt.show()
 
-wordcloud()
+papersPerYear()
