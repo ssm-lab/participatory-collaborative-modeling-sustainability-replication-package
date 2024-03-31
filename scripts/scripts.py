@@ -6,6 +6,7 @@ import ast
 import re
 import random
 from string import Template
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
 inputFolder = './data'
 outputFolder = './output'
@@ -121,5 +122,19 @@ def venuesAndPublishers():
     f.write(result)
     f.close()
     
-    
-venuesAndPublishers()
+def wordcloud():
+    with open('data/abstracts.txt', 'r', encoding="utf-8") as f:
+        text = f.read()
+        
+        stopwords = set(STOPWORDS)
+        stopwords.update(["model", "modeling", "modelling", "models"])
+        
+        wordcloud = WordCloud(background_color="white", stopwords=stopwords, width=1200, height=600).generate(text)
+        
+        plt.figure(figsize=[20,10])
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis("off")
+        plt.savefig(f'{outputFolder}/wordcloud-abstracts.pdf', format='pdf', bbox_inches='tight')
+        plt.show()
+
+wordcloud()
