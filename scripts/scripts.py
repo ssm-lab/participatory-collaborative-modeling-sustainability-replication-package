@@ -5,6 +5,7 @@ import pandas as pd
 import ast
 import re
 import random
+from string import Template
 
 inputFolder = './data'
 outputFolder = './output'
@@ -87,4 +88,38 @@ def worldMap():
     plt.savefig(f'{outputFolder}/papers-per-country.pdf', format='pdf', bbox_inches='tight')
     #plt.show()    
     
-worldMap()
+def venuesAndPublishers():
+    df = loadData()
+    
+    df = df[['Publication venue', 'Publication type', 'Publisher']]
+    
+    papersPerPublisher = df.groupby('Publisher').count().sort_values(by=df.columns[0], ascending=False).reset_index()[['Publisher','Publication type']]
+    papersPerPublisher.columns = ['publisher', 'papers']
+    
+    
+    papersPerVenue = df.groupby(['Publication venue', 'Publisher']).count().sort_values(by=df.columns[1], ascending=False).reset_index()[['Publication venue', 'Publisher','Publication type']]
+    papersPerVenue.columns = ['venue', 'publisher', 'papers']
+    
+    papersPerVenue = papersPerVenue[papersPerVenue['papers']>1]
+    
+    vals = papersPerVenue.astype(str).values
+    rows = ''
+    
+    for val in vals:
+        val[0] = val[0].replace('&', '\&')
+        rows += f"{val[0]} & {val[1]} & {val[2]} \\\\\n"
+        
+    templateValues = {'rows' : rows}
+    
+    result = ""
+    
+    with open('templates/table-template.tex', 'r') as f:
+        src = Template(f.read())
+        result = src.substitute(templateValues)
+    
+    f = open(f'{outputFolder}/venues-table.tex', 'w')
+    f.write(result)
+    f.close()
+    
+    
+venuesAndPublishers()
