@@ -50,7 +50,7 @@ def worldMap():
     
     countries['country'] = countries.apply(lambda row: row['country'].strip(), axis=1)
     
-    print(countries)
+    #print(countries)
     
     papersPerCountry = countries.groupby('country').count().sort_values(by=countries.columns[0], ascending=False).reset_index()
     papersPerCountry.columns = ['country', 'papers']
@@ -80,11 +80,11 @@ def worldMap():
     
     #print(world['papers'])
     
-    world.plot(column = 'papers', edgecolor=u'white', cmap='plasma', ax=ax2, legend = True, missing_kwds={'color': '#ededed'}, legend_kwds={'shrink': 0.66})
+    world.plot(column = 'papers', edgecolor=u'white', cmap='plasma', ax=ax2, legend = True, missing_kwds={'color': '#ededed'}, legend_kwds={'shrink': 0.4})
     #.loc[world['name'].isin(papersPerCountry['country'])]
     
     ax2.axis('scaled')
     plt.savefig(f'{outputFolder}/papers-per-country.pdf', format='pdf', bbox_inches='tight')
-    plt.show()    
+    #plt.show()    
     
 worldMap()
