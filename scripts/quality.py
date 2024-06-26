@@ -11,17 +11,10 @@ from matplotlib.ticker import MaxNLocator
 
 inputFolder = './data'
 outputFolder = './output'
-data = pd.read_excel(f'{inputFolder}/data.xlsx')
-
-data = data[data['Quality score'].notnull()]
-data = data[data['Quality score'] >= 2]
+data = pd.read_excel(f'{inputFolder}/QA-final.xlsx')
 
 prettyPrintDatapoint = {
-    'Q0' : 'OVERALL',
-    'Q1' : 'Q1 (DT)',
-    'Q2' : 'Q2 (Sim)',
-    'Q3' : 'Q3 (AI)',
-    'Q4' : 'Q4 (Challenges)'
+    #'Q4' : 'Q4 (Challenges)'
 }
 
 
@@ -36,8 +29,10 @@ def chartQualityData(data, settings):
         counter.append((variable, round(data[variable].mean(), 3)))
         #counter.append((variable, round(data[variable].std(), 3)))
     
+    print()
+    
     counter.reverse()
-    counter.append(('Q0', round(data[variables].stack().mean(), 3)))
+    counter.append(('OVERALL', round(data[variables].stack().mean(), 3)))
     
     plotData['Quality'] = counter
     
@@ -120,5 +115,5 @@ def chartQualityData(data, settings):
     plt.savefig('{}/{}.pdf'.format(outputFolder, fileName))    
 
 chartQualityData(data, [
-    (['Q1', 'Q2', 'Q3', 'Q4'], '#8fff85', 'quality')]
+    (['Collab', 'Sus', 'Modeling', 'Tool', 'Challenges', 'Limitations', 'Evaluation'], '#8fff85', 'quality')]
 )
