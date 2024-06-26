@@ -13,16 +13,12 @@ inputFolder = './data'
 outputFolder = './output'
 data = pd.read_excel(f'{inputFolder}/data.xlsx')
 
-data = data[data['Quality score'].notnull()]
-data = data[data['Quality score'] >= 2]
-
 #collection for non-default category thresholds
 thresholds = {
     'Publication type' : 0,
-    'Domain' : 0,
-    'Publisher' : 1,
-    'Publication year' : 0,
-    'Author countries cluster' : 0
+    'Application domain' : 0,
+    'Publisher' : 0,
+    'Publication year' : 0
 }
 
 #collection for non-default order categories
@@ -30,15 +26,12 @@ orderByCategory = ['Publication year', 'Publication type']
 
 orders = {
     'Publication year' : ['2018', '2019', '2020', '2021', '2022', '2023', '2024'],
-    'Publication type' : ['Journal', 'Conference', 'Workshop'],
+    'Publication type' : ['Journal', 'Book chapter', 'Conference', 'Workshop'],
 }
 
 #collection for non-default pretty printed categories
 prettyPrintCategory = {
     'Publication type' : 'Pub.type',
-    'Author countries cluster' : 'Geography',
-    'DT style' : 'DT',
-    'Simulation model' : 'Sim'
 }
 
 
@@ -182,8 +175,6 @@ def chartData(data, settings):
 
 chartData(data, [
     (['Publication year', 'Publication type', 'Publisher'], '#85d4ff', 'publications'),
-    (['Domain'], '#85d4ff', 'domain'),
-    (['Author countries cluster'], '#ffa1c0', 'geograpy'),  # #ffdd47
     #(['DT style', 'Simulation model'], '#85d4ff', 'dt'),  # #ffdd47
     ]
 )
