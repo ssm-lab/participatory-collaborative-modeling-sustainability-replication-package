@@ -17,21 +17,22 @@ data = pd.read_excel(f'{inputFolder}/data.xlsx')
 thresholds = {
     'Publication type' : 0,
     'Application domain' : 0,
-    'Publisher' : 0,
+    'Publisher' : 1,
     'Publication year' : 0
 }
 
-#collection for non-default order categories
-orderByCategory = ['Publication year', 'Publication type']
-
 orders = {
-    'Publication year' : ['2018', '2019', '2020', '2021', '2022', '2023', '2024'],
     'Publication type' : ['Journal', 'Book chapter', 'Conference', 'Workshop'],
+}
+
+bins = {
+    'Publication year' : [(0, 2009, '-2009'), (2010, 2014, '2010-2014'), (2015, 2019, '2015-2019'), (2020, 2024, '2020-2024')]
 }
 
 #collection for non-default pretty printed categories
 prettyPrintCategory = {
     'Publication type' : 'Pub.type',
+    'Publication year' : 'Pub.year',
 }
 
 
@@ -58,7 +59,7 @@ def chartData(data, settings):
             #Counter object containing a dictionary of labels and frequencies
             counter = Counter([str(val).strip() for sublist in data[category].dropna().astype(str).str.split(',').tolist() for val in sublist])
             
-            #print(counter)
+            
             
             """
             Threshold management. Elements with a frequency below the threshold are placed into the 'Others' bin.
@@ -71,11 +72,24 @@ def chartData(data, settings):
                 counterUpToTreshold = [x for x in counter.items() if x[1]<=threshold]
             
             #Sort non-'Other' categories before adding the 'Other' bin.
-            if category in orderByCategory:
+            if category in orders.keys():
                 counterAboveTreshold = [tuple for x in orders[category] for tuple in counterAboveTreshold if tuple[0] == x]
                 counterAboveTreshold.reverse()
             else:
                 counterAboveTreshold = sorted(counterAboveTreshold, key=lambda x: x[1])
+                
+            if category in bins.keys():
+                binnedCounter = []
+                for b in bins[category]:
+                    binCount = 0
+                    for c in counter:
+                        if int(c)>=b[0] and int(c)<=b[1]:
+                            binCount += counter[c]
+                    binnedCounter.append((b[2], binCount))
+                
+                binnedCounter.reverse()
+                
+                counterAboveTreshold = binnedCounter
             
             #If there's been a meaningful threshold set AND there are elements in the 'Other' bin, append the bin.
             if threshold > 0 and len(counterUpToTreshold) > 0:
@@ -99,7 +113,7 @@ def chartData(data, settings):
         for i, category in enumerate(plotData):
             counter = plotData[category]
             
-            print(counter)
+            #print(counter)
             
             values = [element[1] for element in counter]
             sumFrequencies = sum(values)
