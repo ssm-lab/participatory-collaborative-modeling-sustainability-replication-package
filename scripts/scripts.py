@@ -145,4 +145,11 @@ def wordcloud():
         plt.savefig(f'{outputFolder}/wordcloud-abstracts.pdf', format='pdf', bbox_inches='tight')
         plt.show()
 
-papersPerYear()
+def sdgs():
+    df = loadData()
+    
+    df = df[['Sustainability goal / SDG'].isna()]
+    
+    print(df)
+
+sdgs()
