@@ -1,20 +1,23 @@
-import os
-import shutil
-import statistics
-from collections import Counter
-
 import numpy as np
+import os
 import pandas as pd
+from collections import Counter
 from matplotlib import pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from matplotlib.ticker import MaxNLocator
+
+
+__author__ = "Istvan David"
+__copyright__ = "Copyright 2024, Sustainable Systems and Methods Lab (SSM)"
+__license__ = "GPL-3.0"
 
 inputFolder = './data'
 outputFolder = './output'
 data = pd.read_excel(f'{inputFolder}/QA-final.xlsx')
 
 prettyPrintDatapoint = {
-    #'Q4' : 'Q4 (Challenges)'
+    'Collab' : 'Cooperation',
+    'Sus' : 'Sustainability',
 }
 
 
