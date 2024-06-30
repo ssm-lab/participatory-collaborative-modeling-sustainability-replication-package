@@ -7,7 +7,7 @@ from matplotlib.offsetbox import AnchoredText
 from matplotlib.ticker import MaxNLocator
 
 
-__author__ = "Istvan David"
+__author__ = "Istvan David and Rajitha Manellanga"
 __copyright__ = "Copyright 2024, Sustainable Systems and Methods Lab (SSM)"
 __license__ = "GPL-3.0"
 
