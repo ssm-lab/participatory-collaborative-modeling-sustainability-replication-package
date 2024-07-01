@@ -57,7 +57,7 @@ def chartQualityData(data, settings):
         
         values = [element[1] for element in counter]
         sumFrequencies = sum(values)
-        labels = [f'{(prettyPrintDatapoint[element[0]] if element[0] in prettyPrintDatapoint.keys() else element[0])} \u2014 {format(element[1], ".3f")}' for element in counter]
+        labels = [f'{(prettyPrintDatapoint[element[0]] if element[0] in prettyPrintDatapoint.keys() else element[0])} \u2014 {format(element[1]*100, ".1f")}%' for element in counter]
         #Get the regular labels and values by:
         #labels, values = zip(*counter)
         
