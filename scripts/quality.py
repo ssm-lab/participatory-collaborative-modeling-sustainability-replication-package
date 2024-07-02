@@ -70,8 +70,14 @@ def chartQualityData(data, settings):
         #Create vertical bar chart
         plt.sca(axs[i])
         barlist = plt.barh(indexes, values, width, color=color)
-        barlist[-1].set_color('#12e000')
+        #barlist[-1].set_color('#12e000')
+        barlist[-1].set_color('#85d4ff')
         plt.yticks(indexes, labels, rotation=0)
+        
+        #Quality points below average are colored red
+        for bar in barlist[0:-1]:
+            if(bar.get_width() < barlist[-1].get_width()):
+                bar.set_color('#ffa1c0')
 
         """
         Title of the chart shown as a rotated Y axis label on the right side, inside of the plot area

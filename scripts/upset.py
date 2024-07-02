@@ -78,11 +78,11 @@ numbers = from_memberships(
     ]
 )
 
-matplotlib.rcParams["font.size"] = 9
+matplotlib.rcParams["font.size"] = 10
 facecolor="#85d4ff"
 fig = plt.figure(figsize=(8, 5))
 result = plot(numbers, show_counts="{:,}", show_percentages=True, facecolor=facecolor, fig=fig, element_size=None)
 result["intersections"].set_ylabel("Joint number")
 
 plt.gcf().tight_layout()
-plt.savefig(f'{outputFolder}/upset.pdf')
+plt.savefig(f'{outputFolder}/upset.pdf', bbox_inches='tight')
