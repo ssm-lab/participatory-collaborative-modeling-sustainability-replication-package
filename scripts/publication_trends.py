@@ -190,7 +190,7 @@ def chartData(data, settings):
         
 
 chartData(data, [
-    (['Publication year', 'Publication type', 'Publisher'], '#85d4ff', 'publications'),
+    (['Publication year', 'Publication type', 'Publisher'], '#bdbdbd', 'publications'), #85d4ff
     #(['DT style', 'Simulation model'], '#85d4ff', 'dt'),  # #ffdd47
     ]
 )

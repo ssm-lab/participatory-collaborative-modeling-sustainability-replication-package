@@ -22,40 +22,48 @@ __license__ = "GPL-3.0"
 inputFolder = './data'
 outputFolder = './output'
 data = pd.read_excel(f'{inputFolder}/data.xlsx')
+column = 'Sustainability dimension'
+#column = 'Sustainability goal / SDG'
 
-prettyPrintDatapoint = {
-    'Collab' : 'Cooperation',
-    'Sus' : 'Sustainability',
+
+columnFilename = {
+    'Sustainability dimension' : 'sustainability_dim',
+    'Sustainability goal / SDG' : 'sdg',
 }
 
-dimensions = ['Environmental', 'Social', 'Economic']
+list_all = data[column].dropna().astype(str).str.split(',').dropna()
+l = [y.strip() for x in list_all for y in x]
+dimensions = list(set(l))
 
-counter_1 = Counter()
-for dimension in dimensions:
-    counts = len(data.loc[
-        (data['Sustainability dimension'].str.count(',')+1 == 1) &
-        (data['Sustainability dimension'].str.contains(dimension))])
+counter = Counter()
+
+for length in range(0, len(dimensions)):
+    combos = list(combinations(dimensions, length+1))
     
-    counter_1[dimension] = counts
-
-counter_2 = Counter()
-pairs = list(combinations(dimensions, 2))
-
-for pair in pairs:
-    counts = len(data.loc[
-        (data['Sustainability dimension'].str.count(',')+1 == 2) &
-        (data['Sustainability dimension'].str.contains(pair[0])) &
-        (data['Sustainability dimension'].str.contains(pair[1]))])
+    data_slice_1 = data.loc[data[column].str.count(',')+1 == length+1]
     
-    counter_2[pair] = counts
-
-counter_3 = Counter()
-counts = len(data.loc[data['Sustainability dimension'].str.count(',')+1 == 3])
-counter_3[list(combinations(dimensions, 3))[0]] = counts
+    #print(f'COMBOS:{combos}')
+    for combo in combos:
+        data_slice = data_slice_1
+        #print(f'COMBO: {combo}')
+        if len(combo) == 1:
+            #print('combo of 1')
+            #print(combo[0])
+            data_slice = data_slice.loc[data_slice[column].str.contains(combo[0])]
+            counter[combo[0]] = len(data_slice)
+        else:
+            #print('combo of N')
+            for dim in combo:
+                #print(f'..........slicing for dim {dim}')
+                data_slice = data_slice.loc[data_slice[column].str.contains(dim)]
+            counter[combo] = len(data_slice)
 
 def get_pair_count_2(dim1, dim2):
-    assert counter_2[(dim1, dim2)] == 0 or counter_2[(dim2, dim1)] == 0
-    return counter_2[(dim1, dim2)] + counter_2[(dim2, dim1)]
+    assert counter[(dim1, dim2)] == 0 or counter[(dim2, dim1)] == 0
+    return counter[(dim1, dim2)] + counter[(dim2, dim1)]
+
+
+print(counter)
 
 numbers = from_memberships(
     [
@@ -68,21 +76,22 @@ numbers = from_memberships(
         ['Economic', 'Social', 'Environmental'],
     ],
     data=[
-        counter_1['Environmental'],
-        counter_1['Social'],
-        counter_1['Economic'],
+        counter['Environmental'],
+        counter['Social'],
+        counter['Economic'],
         get_pair_count_2('Environmental', 'Social'),
         get_pair_count_2('Environmental', 'Economic'),
         get_pair_count_2('Social', 'Economic'),
-        counter_3[list(combinations(dimensions, 3))[0]]
+        counter[list(combinations(dimensions, 3))[0]]
     ]
 )
 
 matplotlib.rcParams["font.size"] = 10
-facecolor="#85d4ff"
+#facecolor="#85d4ff"
+facecolor="#bdbdbd"
 fig = plt.figure(figsize=(8, 5))
 result = plot(numbers, show_counts="{:,}", show_percentages=True, facecolor=facecolor, fig=fig, element_size=None, sort_categories_by='-cardinality', sort_by='input')
 result["intersections"].set_ylabel("Joint number")
 
 plt.gcf().tight_layout()
-plt.savefig(f'{outputFolder}/upset.pdf', bbox_inches='tight')
+plt.savefig(f'{outputFolder}/upset-{columnFilename[column]}.pdf', bbox_inches='tight')
