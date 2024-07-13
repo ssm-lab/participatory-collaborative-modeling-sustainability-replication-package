@@ -88,7 +88,8 @@ numbers = from_memberships(
 
 matplotlib.rcParams["font.size"] = 10
 #facecolor="#85d4ff"
-facecolor="#bdbdbd"
+#facecolor="#bdbdbd"
+facecolor="#ffc569"
 fig = plt.figure(figsize=(8, 5))
 result = plot(numbers, show_counts="{:,}", show_percentages=True, facecolor=facecolor, fig=fig, element_size=None, sort_categories_by='-cardinality', sort_by='input')
 result["intersections"].set_ylabel("Joint number")
