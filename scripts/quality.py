@@ -13,7 +13,7 @@ __license__ = "GPL-3.0"
 
 inputFolder = './data'
 outputFolder = './output'
-data = pd.read_excel(f'{inputFolder}/QA-final.xlsx')
+data = pd.read_excel(f'{inputFolder}/QA.xlsx')
 
 prettyPrintDatapoint = {
     'Collab' : 'Cooperation',
