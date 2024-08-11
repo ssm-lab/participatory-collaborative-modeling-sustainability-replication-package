@@ -7,9 +7,11 @@ Sustainability has become a key characteristic of modern systems. Unfortunately,
 
 ## Contents
 
-- `/data` - Data file
-- `/scripts` - Analysis scripts for the automated analysis of data
-- `/output` - Results of the analyses, including charts and numeric results
+- `/data` - Data files.
+  - `data.xlsx` - Data extraction sheet of the 24 included studies.
+  - `QA.xlsx` - Quality scores of the 24 included studies.
+- `/scripts` - Analysis scripts for the automated analysis of data.
+- `/output` - Results of the analyses as used in the article.
 
 ## How to use
 
