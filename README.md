@@ -21,3 +21,4 @@ Sustainability has become a key characteristic of modern systems. Unfortunately,
 ### Run analysis
 - For publication trends: execute `python .\scripts\publication_trends.py` from the root folder.
 - For the quality report: execute `python .\scripts\quality.py` from the root folder.
+- For the upset chart: execute `python .\scripts\upset.py` from the root folder.
