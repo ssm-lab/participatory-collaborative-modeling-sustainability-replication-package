@@ -1,6 +1,9 @@
 # Replication package
 
-### for the paper _Paving the way for Collaborative Modeling of Sustainable Systems: Lessons From Participatory and Informal Modeling_.
+### for the paper _Participatory and Collaborative Modeling of Sustainable Systems: A Systematic Review_.
+
+## About
+Sustainability has become a key characteristic of modern systems. Unfortunately, the convoluted nature of sustainability limits its understanding and hinders the design of sustainable systems. Thus, cooperation among a diverse set of stakeholders is paramount to sound sustainability-related decisions. Collaborative modeling has demonstrated benefits in facilitating cooperation between technical experts in engineering problems; but fails to include non-technical stakeholders in the modeling endeavor. In contrast, participatory modeling excels in facilitating high-level modeling among a diverse set of stakeholders, often of non-technical profiles; but fails to generate actionable engineering models. To instigate a convergence between the two disciplines, we systematically survey the field of collaborative and participatory modeling for sustainable systems. By analyzing 24 primary studies (published until June 2024), we identify common challenges, cooperation models, modeling formalisms and tools; and recommend future avenues of research.
 
 ## Contents
 
