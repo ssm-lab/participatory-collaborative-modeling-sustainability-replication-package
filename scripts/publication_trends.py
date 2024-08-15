@@ -162,6 +162,5 @@ def chartData(data, settings):
         
 
 chartData(data, [
-    (['Publication year', 'Publication type', 'Publisher'], '#ffc569', 'publications'), #85d4ff #bdbdbd #91c8ff
-    ]
+    (['Publication year', 'Publication type', 'Publisher'], '#85d4ff', 'publications')]
 )

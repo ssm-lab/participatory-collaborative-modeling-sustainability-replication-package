@@ -64,8 +64,7 @@ def chartQualityData(data, settings):
         #Create vertical bar chart
         plt.sca(axs[i])
         barlist = plt.barh(indexes, values, width, color=color)
-        barlist[-1].set_color('#ffc569') #bdbdbd
-        #barlist[-1].set_color('#91c8ff')
+        barlist[-1].set_color('#85d4ff')
         
         plt.yticks(indexes, labels, rotation=0)
         
