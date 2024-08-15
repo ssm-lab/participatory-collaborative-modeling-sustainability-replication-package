@@ -23,7 +23,6 @@ inputFolder = './data'
 outputFolder = './output'
 data = pd.read_excel(f'{inputFolder}/data.xlsx')
 column = 'Sustainability dimension'
-#column = 'Sustainability goal / SDG'
 
 
 columnFilename = {
@@ -62,8 +61,6 @@ def get_pair_count_2(dim1, dim2):
     assert counter[(dim1, dim2)] == 0 or counter[(dim2, dim1)] == 0
     return counter[(dim1, dim2)] + counter[(dim2, dim1)]
 
-
-print(counter)
 
 numbers = from_memberships(
     [
