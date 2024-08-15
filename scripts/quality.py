@@ -6,8 +6,7 @@ from matplotlib import pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from matplotlib.ticker import MaxNLocator
 
-
-__author__ = "Istvan David and Rajitha Manellanga"
+__author__ = "Istvan David"
 __copyright__ = "Copyright 2024, Sustainable Systems and Methods Lab (SSM)"
 __license__ = "GPL-3.0"
 
@@ -20,7 +19,6 @@ prettyPrintDatapoint = {
     'Sus' : 'Sustainability',
 }
 
-
 def chartQualityData(data, settings):
     categories = ['Quality']
     (variables, color, fileName) = settings[0]
@@ -30,7 +28,6 @@ def chartQualityData(data, settings):
     
     for variable in variables:
         counter.append((variable, round(data[variable].mean(), 3)))
-        #counter.append((variable, round(data[variable].std(), 3)))
     
     print()
     
@@ -57,10 +54,7 @@ def chartQualityData(data, settings):
         
         values = [element[1] for element in counter]
         sumFrequencies = sum(values)
-        labels = [f'{(prettyPrintDatapoint[element[0]] if element[0] in prettyPrintDatapoint.keys() else element[0])} \u2014 {format(element[1]*100, ".1f")}%' for element in counter]
-        #Get the regular labels and values by:
-        #labels, values = zip(*counter)
-        
+        labels = [f'{(prettyPrintDatapoint[element[0]] if element[0] in prettyPrintDatapoint.keys() else element[0])} \u2014 {format(element[1]*100, ".1f")}%' for element in counter]        
         
         #Prepare bar chart
         indexes = np.arange(len(labels))
@@ -70,8 +64,9 @@ def chartQualityData(data, settings):
         #Create vertical bar chart
         plt.sca(axs[i])
         barlist = plt.barh(indexes, values, width, color=color)
-        #barlist[-1].set_color('#85d4ff')
         barlist[-1].set_color('#ffc569') #bdbdbd
+        #barlist[-1].set_color('#91c8ff')
+        
         plt.yticks(indexes, labels, rotation=0)
         
         #Quality points below average are colored red

@@ -12,9 +12,6 @@ from matplotlib import pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from matplotlib.ticker import MaxNLocator
 
-'''
-Quick and dirty implementation code for the UpSet chart
-'''
 __author__ = "Istvan David"
 __copyright__ = "Copyright 2024, Sustainable Systems and Methods Lab (SSM)"
 __license__ = "GPL-3.0"
@@ -23,7 +20,6 @@ inputFolder = './data'
 outputFolder = './output'
 data = pd.read_excel(f'{inputFolder}/data.xlsx')
 column = 'Sustainability dimension'
-
 
 columnFilename = {
     'Sustainability dimension' : 'sustainability_dim',
@@ -41,19 +37,13 @@ for length in range(0, len(dimensions)):
     
     data_slice_1 = data.loc[data[column].str.count(',')+1 == length+1]
     
-    #print(f'COMBOS:{combos}')
     for combo in combos:
         data_slice = data_slice_1
-        #print(f'COMBO: {combo}')
         if len(combo) == 1:
-            #print('combo of 1')
-            #print(combo[0])
             data_slice = data_slice.loc[data_slice[column].str.contains(combo[0])]
             counter[combo[0]] = len(data_slice)
         else:
-            #print('combo of N')
             for dim in combo:
-                #print(f'..........slicing for dim {dim}')
                 data_slice = data_slice.loc[data_slice[column].str.contains(dim)]
             counter[combo] = len(data_slice)
 
@@ -87,6 +77,7 @@ matplotlib.rcParams["font.size"] = 10
 #facecolor="#85d4ff"
 #facecolor="#bdbdbd"
 facecolor="#ffc569"
+#facecolor="#91c8ff"
 fig = plt.figure(figsize=(8, 5))
 result = plot(numbers, show_counts="{:,}", show_percentages=True, facecolor=facecolor, fig=fig, element_size=None, sort_categories_by='-cardinality', sort_by='input')
 result["intersections"].set_ylabel("Joint number")

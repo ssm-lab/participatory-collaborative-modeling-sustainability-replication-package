@@ -6,8 +6,7 @@ from matplotlib import pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 from matplotlib.ticker import MaxNLocator
 
-
-__author__ = "Istvan David and Rajitha Manellanga"
+__author__ = "Istvan David"
 __copyright__ = "Copyright 2024, Sustainable Systems and Methods Lab (SSM)"
 __license__ = "GPL-3.0"
 
@@ -37,17 +36,6 @@ prettyPrintCategory = {
     'Publication year' : 'Pub.year',
 }
 
-
-#titleLabelPosition = {
-#    'background' : 'lower right',
-#    'role' :  'lower right',
-#}
-
-#titleLabelPosition2 = {
-#    'projectLength' : 'lower right'
-#}
-
-#def chartData(data, categories, color, fileName):
 def chartData(data, settings):
     for categories, color, fileName in settings:
         
@@ -60,8 +48,6 @@ def chartData(data, settings):
             
             #Counter object containing a dictionary of labels and frequencies
             counter = Counter([str(val).strip() for sublist in data[category].dropna().astype(str).str.split(',').tolist() for val in sublist])
-            
-            
             
             """
             Threshold management. Elements with a frequency below the threshold are placed into the 'Others' bin.
@@ -115,8 +101,6 @@ def chartData(data, settings):
         for i, category in enumerate(plotData):
             counter = plotData[category]
             
-            #print(counter)
-            
             values = [element[1] for element in counter]
             sumFrequencies = sum(values)
             labels = ['{} \u2014 {} ({}%)'.format(element[0], element[1], round((element[1]/sumFrequencies)*100)) for element in counter]
@@ -136,19 +120,9 @@ def chartData(data, settings):
             Title of the chart shown as a rotated Y axis label on the right side, inside of the plot area
             """
             title = prettyPrintCategory[category] if category in prettyPrintCategory.keys() else category.capitalize()
-            #right label placement:
-            #axs[i].yaxis.set_label_position("right")
-            #plt.ylabel(title, rotation=270, fontsize=12, labelpad=-30)
             #left label placement:
             axs[i].yaxis.set_label_position("left")
             plt.ylabel(title, rotation=90, fontsize=12, labelpad=7)
-            
-            """
-            Left here in case we'd need to revert to anchored text from right-side inner Y label
-            """
-            #anchored_text = AnchoredText(title, loc= titleLabelPosition[category] if category in titleLabelPosition.keys() else "center right")
-            #anchored_text = AnchoredText(title, loc="center right")
-            #axs[i].add_artist(anchored_text)
             
             #Remove plot area borders
             axs[i].spines['right'].set_visible(False)
@@ -185,20 +159,9 @@ def chartData(data, settings):
             plt.gcf().tight_layout()
 
         plt.savefig('{}/{}.pdf'.format(outputFolder, fileName))
-        #plt.show()  #Turn this off in final code or make it optional
-
         
 
 chartData(data, [
-    (['Publication year', 'Publication type', 'Publisher'], '#ffc569', 'publications'), #85d4ff #bdbdbd
-    #(['DT style', 'Simulation model'], '#85d4ff', 'dt'),  # #ffdd47
+    (['Publication year', 'Publication type', 'Publisher'], '#ffc569', 'publications'), #85d4ff #bdbdbd #91c8ff
     ]
 )
-
-
-#def printNumericStats():
-#    print('Mean experience: {}.'.format(statistics.mean(data['experience'])))
-#    print('Std experience: {}.'.format(statistics.pstdev(data['experience'])))
-#    
-#    print('Mean collaborators: {}.'.format(statistics.mean(data['collaborators'])))
-#    print('Std collaborators: {}.'.format(statistics.pstdev(data['collaborators'])))
